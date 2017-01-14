@@ -1,62 +1,48 @@
+from source_generators import *     # includes numpy import, np
+import matplotlib.pylab as plt
 
-import numpy as np
-from source_generators import *
-
-class Source ():
+class modelSource ():
     'Source class to represent objects to be lensed'
 
     def __init__(self, name, stype, side, radius=0.0, aspectRatio = 1.0, maxLum = 1.0):
-
+        """ Constructor method """
         self.name = name
-        self.type = ltype
+        self.type = stype
         self.aspectRatio = aspectRatio
         self.maxLum = maxLum
         if aspectRatio == 1.0:
-            self.xsize, self.ysize = pixels, pixels
+            self.xsize, self.ysize = side,  side
         else:
-            self.xsize, self.ysize = pixels, pixels*aspectRatio
+            self.xsize, self.ysize = side, side*aspectRatio
 
         self.radius = radius
 
         if stype == "square":
-            self.view = square_source( radius, xsize, ysize, maxLum )
+            self.view = square_source( radius, self.xsize, self.ysize, maxLum )
         elif stype == "circular":
-            self.view = circular_source( radius, xsize, ysize)
+            self.view = circular_source( radius, self.xsize, self.ysize)
         elif stype == "discs":
-            self.view = discs_source( radius, xsize, ysize)
+            self.view = discs_source( radius, self.xsize, self.ysize)
 
         self.lensedView = None
 
+        print "Source array " + self.name + " generated."
+
     def plotSource(self):
+        """ Plot the source """
+        plt.figure('lens')						#Declare figure
+        ax1=plt.axes()						#Declare axis
+        ax1.xaxis.set_ticklabels([])				#Remove ticks
+        ax1.yaxis.set_ticklabels([])
+        #plt.figtext(-2.5, -2.5, pn)
+        #plt.title(pn,loc='center')
+        plt.imshow(self.view)
 
 
 
-        print "Source array for " + self.name + "generated."
+class imageSource():
+    Class for handling actual images as sources
 
+    def __init__(self, file ):
 
-
-class Lense():
-    'Lense class to represent lensing object.'
-
-    def __init__(self, name, ltype, x01, x02):
-
-        self.name = name
-        self.name = ltype
-        self.x01, self.x02 = x01, x02
-
-        if ltype == "point":                                        # Define the distance metric for each type of lens
-            def dist(self, x1, x2):
-                dd = x1-self.x01)**2+(x2-self.x02)**2
-                return dd
-        elif ltype == "sis":
-            def dist(self, x1, x2):
-                dd = np.sqrt((x1-self.x01)**2+(x2-self.x02)**2)
-                return dd
-
-        print "Lense generated. \n Type: %s, Name: %s \
-                                    \n Position in lens plane: %d, %d" % (self.name, self.ltype, self.x01, self.x02)
-
-        def lensedImage(self, source):
-
-
-            return
+        #Remember to open and close properly
