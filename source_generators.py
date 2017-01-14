@@ -33,9 +33,9 @@ def discs_source(rr, xsize, ysize, lum=0):
     rrs = np.arange( space, (rr + rr/ndiscs) , rr/ndiscs)
     rr2 = rrs*rrs
     lums = np.zeros(ndiscs)
-    for ii=0, ndiscs:
+    for ii in range(ndiscs):
         lums[ii]= 2**ii
-      xhalf,yhalf=xsize/2.,ysize/2.				#Calculate cooridinates of center
+        xhalf,yhalf=xsize/2.,ysize/2.				#Calculate cooridinates of center
     for i in range(xsize):				#Scan through frame to find points to be included in source
         for j in range(ysize):
             if (xhalf-i)**2+(yhalf-j)**2<=rr2[0]:
